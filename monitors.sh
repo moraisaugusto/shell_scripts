@@ -1,5 +1,10 @@
 #!/usr/bin/env sh
 
+# Please define your monitors
+EXTERNAL1="DP-5"
+EXTERNAL2="DP-0"
+INTERNAL="DP-4"
+
 function show_usage(){
     cat << EOF
 Usage:
@@ -14,16 +19,16 @@ while [ ! -z "$1" ]; do
         MONITORS="$2"
         if [[ $MONITORS == "2-externals" ]];then
             printf "Enabling $MONITORS monitor(s)\n"
-            xrandr --output DP-5 --primary --mode 3840x2160 --rate 120 --scale 1x1 --output DP-0 --mode 3840x2160 --rate 60 --scale 1x1 --left-of DP-5 --output DP-4 --off
+            xrandr --output $EXTERNAL1 --primary --mode 3840x2160 --rate 120 --scale 1x1 --output $EXTERNAL2 --mode 3840x2160 --rate 60 --scale 1x1 --left-of $EXTERNAL1 --output $INTERNAL --off
         elif [[ $MONITORS == "1-external-and-internal" ]];then
             printf "Enabling $MONITORS monitor(s)\n"
-            xrandr --output DP-5 --primary --mode 3840x2160 --rate 120 --scale 1x1 --output DP-0 --off --output DP-4 --mode 1920x1080 --right-of DP-5 --scale  1.4x1.4
+            xrandr --output $EXTERNAL1 --primary --mode 3840x2160 --rate 120 --scale 1x1 --output $EXTERNAL2 --off --output $INTERNAL --mode 1920x1080 --right-of $EXTERNAL1 --scale  1.4x1.4
         elif [[ $MONITORS == "1-external" ]];then
-            xrandr --output DP-5 --primary --mode 3840x2160 --rate 120 --scale 1x1 --output DP-0 --off --output DP-4 --off
+            xrandr --output $EXTERNAL1 --primary --mode 3840x2160 --rate 120 --scale 1x1 --output $EXTERNAL2 --off --output $INTERNAL --off
             printf "Enabling $MONITORS monitor(s)\n"
         elif [[ $MONITORS == "1-internal" ]];then
             printf "Enabling $MONITORS monitor(s)\n"
-            xrandr --output DP-5 --off --output DP-4 --primary --mode 1920x1080 --scale 1.6x1.6 --output DP-5 --off
+            xrandr --output $EXTERNAL1 --off --output $EXTERNAL2 --off --output $INTERNAL --primary --mode 1920x1080 --scale 1.6x1.6
         fi
         shift
     fi
